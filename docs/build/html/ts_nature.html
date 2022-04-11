@@ -1,0 +1,251 @@
+
+
+<!doctype html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+    <title>Nature of the time-series &#8212; RMVA 0.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/bizstyle.css" />
+    
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Comparing price areas" href="comp_area.html" />
+    <link rel="prev" title="Preprocessing" href="preprocessing.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <!--[if lt IE 9]>
+    <script src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="comp_area.html" title="Comparing price areas"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="preprocessing.html" title="Preprocessing"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">RMVA 0.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Nature of the time-series</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="nature-of-the-time-series">
+<h1>Nature of the time-series<a class="headerlink" href="#nature-of-the-time-series" title="Permalink to this headline">¶</a></h1>
+<p>An overview of the dynamic nature of the time-series is presented here.
+When looking for unusual values in the spot price data, it was found
+that there have been several spikes in the time series, with the most
+prominent one being in DK1 on June 7, 2013 - when spot prices sky
+rocketed to 2000 €, which is almost 53 times higher than the average.
+While this may apparently seem like a spurious value, a deeper
+investigation and literature review supported its legitimacy. It turns
+out that on that day DK1 reached a technical maximum curtailment
+price of 2000 €/MWh. This was due to the revisions on thermal power
+plants that coincided with grid maintenance and low wind power production
+at the same time.</p>
+<p>In the following section, the nature of electricity price dynamics
+in the day-ahead market of NordPool is discussed. We will achieve
+it through the following three sub-tasks:</p>
+<ol class="arabic simple">
+<li><p>Time-series decomposition</p></li>
+<li><p>Auto-correlation effects</p></li>
+<li><p>Effect of generation and consumption</p></li>
+</ol>
+<section id="time-series-decomposition">
+<h2>Time-series decomposition<a class="headerlink" href="#time-series-decomposition" title="Permalink to this headline">¶</a></h2>
+<figure class="align-left">
+<a class="reference internal image-reference" href="_images/ts_decomp.png"><img alt="Price time-series decomposition" src="_images/ts_decomp.png" style="width: 502.0px; height: 550.0px;" /></a>
+</figure>
+<p>Time-series of a real world entity usually contains cumulated information
+from several factors. Decomposing a time-series help to clearly visualize
+and understand the effect of individual component separately. In this
+context, the electricity price time-series is decomposed into three main
+components - trend, seasonality and noise. Each component contain succesive
+insight into the true nature of the time series, and understanding them
+not only helps interprete results of overall analysis, but also aid in
+improved forecast accuracy. In this work, time-series decomposition is
+applied using the STL function from the <em>statsmodels</em> library. It uses
+straight-forward method that decompose time-series using a low-pass filter
+which makes it robust to the outliers - a feature that is often neglected
+in the classical (seasonal_decompose function) approach to time-series
+decomposition. Additionally, STL can handle any type of seasonality and
+allows more control to the user in deciding the rate of change of the
+seasonal component. Due to all these attractive features, STL function
+has been chosen in this work. It is applied on the monthly data to get
+the features shown in the figure.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="hll"><span class="kn">from</span> <span class="nn">statsmodels.tsa.seasonal</span> <span class="kn">import</span> <span class="n">STL</span>
+</span><span class="hll"><span class="n">res</span> <span class="o">=</span> <span class="n">STL</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="n">period</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+</span><span class="n">fig</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">get_axes</span><span class="p">()</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">observed</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">trend</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">seasonal</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">resid</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="auto-correlation-effects">
+<h2>Auto-correlation effects<a class="headerlink" href="#auto-correlation-effects" title="Permalink to this headline">¶</a></h2>
+<p>Now that we have seen that our electricity price time-series exhibit
+clear trend and seasonality components, it can be inferred that it
+inherently carries a serial dependence with a lagged version of itself
+- an analysis best studied with Auto Correlation Function (ACF) and
+Partial Auto Correlation Function (PACF).</p>
+<figure class="align-center" style="width: 100%">
+<img alt="Correlation effects" src="_images/acf_pacf_qq.png" />
+</figure>
+<p>The analysis relies on the assumption that the current value <cite>S_{t}</cite>
+is somehow dependent on its lagged values <cite>S_{t-1}, S_{t-1}, S_{t-3}</cite>
+and so on. This allows to build a linear regression model for our problem.
+The null hypothesis is formulated such that the time-series samples
+are independent and identically distributed random variables. The blue
+shaded region in ACF and PACF plots indicate the confidence interval
+used to test the null hypothesis. In this case, we have used the monthly
+data and saw that the values begin to showly fall with increasing lag
+values, with first six values remaining outside the blue area indicating
+that the time-series contain significant auto-correlation and the effect
+of seasonality (the ridge and crest of annual curves alter over a six
+months period) - further emphasizing the strong influence of variable
+wind power in the generation mix as well as the gross consumption needs
+on determining the price level. Unlike ACF, which explains how the
+present value <cite>S_{t}</cite> of a time-series is correlated with its past
+values (<cite>S_{t-1}, S_{t-2}…S_{t-k}</cite>) at lag <cite>k</cite>, PACF represents
+the autocorrelation between <cite>S_{t}</cite> and <cite>S_{t-k}</cite>, not accounted for
+by lags between 1 and (<cite>k-1</cite>). In our analysis, there is a single
+spike at the first lag in PACF followed by small random values, which
+indicate an Auto Regressive (AR) process of order 1 (number of large
+spikes in PACF determines the order of AR process). The <em>statsmodel</em>
+library is used in this work to extract the values and confidence
+intervals of the auto-correlation function.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="hll"><span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="nn">sm</span>
+</span><span class="hll"><span class="n">data</span> <span class="o">=</span> <span class="n">input_data</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s1">&#39;M&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</span>
+<span class="n">sm</span><span class="o">.</span><span class="n">graphics</span><span class="o">.</span><span class="n">tsa</span><span class="o">.</span><span class="n">plot_acf</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">lags</span><span class="o">=</span><span class="n">nlag</span><span class="p">,</span> <span class="n">zero</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">sm</span><span class="o">.</span><span class="n">graphics</span><span class="o">.</span><span class="n">tsa</span><span class="o">.</span><span class="n">plot_pacf</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">lags</span><span class="o">=</span><span class="n">nlag</span><span class="p">,</span> <span class="n">zero</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">sm</span><span class="o">.</span><span class="n">qqplot</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="effect-of-generation-and-consumption">
+<h2>Effect of generation and consumption<a class="headerlink" href="#effect-of-generation-and-consumption" title="Permalink to this headline">¶</a></h2>
+<figure class="align-center" style="width: 95%">
+<img alt="Correlation between wind share and price" src="_images/windshare_price_corr.png" />
+</figure>
+<p>Electricity price in the day-ahead market is determined through the merit
+order curve where the bids for each hour of the following day from buyers
+and sellers are arranged in order and the clearing (equilibrium) price is
+decided from the intersection of those two curves. Generation sources like
+wind and solar have near zero marginal costs, making them appear at the
+bottom of the merit order curve. Peak power plants, which operate only to
+cover peaks in demand, usually have the highest operating costs and often
+appear at the top of the merit order curve. In between these two extremes,
+are nuclear, coal and combined cycle gas plants. Now, with increasing share
+of wind in the generation mix (when large volume of electricity demand is
+covered by wind power), this merit order mechanism results in a relatively
+low clearing price. However, if the wind production is low, specially in
+situations when electricity demand remains high, the demand is covered with
+more expensive generations, thereby increasing the clearing price. This
+calls for our attention in understanding the importance of electricity demand
+and the share of variable renewable sources like wind in the generation mix.</p>
+<figure class="align-center" style="width: 95%">
+<img alt="Correlation between electricity consumption and price" src="_images/con_price_corr.png" />
+</figure>
+<p>Electricity consumption in Denmark follows clear seasonal cycles with
+increased demand during cold winter months and reduced electricity needs
+in summer. Electricity consumption also follows a diurnal pattern with
+two distinct peaks - the primary one being in the mid-morning when people
+start to work and industries begin to operate heavy machineries and the
+secondary peak appears in the evening when people go back home and turns
+of daily appliances like TV and dishwashers. This unique feature of
+electricity consumption with this two humped diurnal curve is reproduced
+by the electricity price time series as well, indicating how strongly the
+level of electricity consumption influence the price.</p>
+<figure class="align-center" style="width: 75%">
+<img alt="Diurnal pattern of consumption and price" src="_images/con_price_daily.png" />
+</figure>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Nature of the time-series</a><ul>
+<li><a class="reference internal" href="#time-series-decomposition">Time-series decomposition</a></li>
+<li><a class="reference internal" href="#auto-correlation-effects">Auto-correlation effects</a></li>
+<li><a class="reference internal" href="#effect-of-generation-and-consumption">Effect of generation and consumption</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="preprocessing.html"
+                        title="previous chapter">Preprocessing</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="comp_area.html"
+                        title="next chapter">Comparing price areas</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/ts_nature.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="comp_area.html" title="Comparing price areas"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="preprocessing.html" title="Preprocessing"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">RMVA 0.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Nature of the time-series</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2022, Kabitri Chattopadhyay.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.1.
+    </div>
+  </body>
+</html>

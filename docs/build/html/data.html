@@ -1,0 +1,149 @@
+
+
+<!doctype html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+    <title>About the data &#8212; RMVA 0.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/bizstyle.css" />
+    
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Preprocessing" href="preprocessing.html" />
+    <link rel="prev" title="Welcome to RMVA’s documentation!" href="index.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <!--[if lt IE 9]>
+    <script src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="preprocessing.html" title="Preprocessing"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to RMVA’s documentation!"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">RMVA 0.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">About the data</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="about-the-data">
+<h1>About the data<a class="headerlink" href="#about-the-data" title="Permalink to this headline">¶</a></h1>
+<p>In this project, variability of electricity time series data (including electricity prices in the day-ahead market, electricity generation and consumption) has been analyzed to understand how the interplay of several of these components may influence the day-ahead market price of electricity. Given this objective, our analysis so far is restricted to data resolution on the hourly scale and above. To keep the analysis as much general as possible, technical details have been omitted to avoid any unwanted case sensitivity.</p>
+<section id="data-source">
+<h2>Data source<a class="headerlink" href="#data-source" title="Permalink to this headline">¶</a></h2>
+<p>All data provided by Danish Transmission System Operator, Energinet. Data downloaded from &lt;<a class="reference external" href="https://www.energidataservice.dk">https://www.energidataservice.dk</a>&gt;. Latest data downloaded on 09 September, 2021.</p>
+</section>
+<section id="data-type">
+<h2>Data type<a class="headerlink" href="#data-type" title="Permalink to this headline">¶</a></h2>
+<p>This project deploys analysis of the following data sets.</p>
+<ol class="arabic simple">
+<li><p>electricity prices in the day-ahead market</p></li>
+<li><p>gross electricity consumption</p></li>
+<li><p>electricity generation from several sources, like central and local power plants, solar, onshore and offshore winds, hydro etc.</p></li>
+</ol>
+<p>Electricity price data is the core component of the analysis while consumption and generation data are used to explain any influence they may exert on the price dynamics.</p>
+<p>All data downloaded from Energinet is in .csv format.</p>
+</section>
+<section id="period-covered">
+<h2>Period covered<a class="headerlink" href="#period-covered" title="Permalink to this headline">¶</a></h2>
+<p>The simulation period covers a 15 year old duration from 2006-2020. All data is in hourly resolution and upscaled in certain cases as per requirements.</p>
+</section>
+<section id="quick-overview">
+<h2>Quick overview<a class="headerlink" href="#quick-overview" title="Permalink to this headline">¶</a></h2>
+<figure class="align-left" id="id1">
+<a class="reference internal image-reference" href="_images/price_overview.png"><img alt="Overview of price dynamics" src="_images/price_overview.png" style="width: 626.0px; height: 316.0px;" /></a>
+<figcaption>
+<p><span class="caption-text">An overview of electricity prices over the simulation period.</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">About the data</a><ul>
+<li><a class="reference internal" href="#data-source">Data source</a></li>
+<li><a class="reference internal" href="#data-type">Data type</a></li>
+<li><a class="reference internal" href="#period-covered">Period covered</a></li>
+<li><a class="reference internal" href="#quick-overview">Quick overview</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Welcome to RMVA’s documentation!</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="preprocessing.html"
+                        title="next chapter">Preprocessing</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/data.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="preprocessing.html" title="Preprocessing"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to RMVA’s documentation!"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">RMVA 0.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">About the data</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2022, Kabitri Chattopadhyay.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.1.
+    </div>
+  </body>
+</html>

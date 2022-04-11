@@ -1,0 +1,171 @@
+
+
+<!doctype html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+    <title>Welcome to RMVA’s documentation! &#8212; RMVA 0.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/bizstyle.css" />
+    
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="About the data" href="data.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <!--[if lt IE 9]>
+    <script src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="data.html" title="About the data"
+             accesskey="N">next</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">RMVA 0.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Welcome to RMVA’s documentation!</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="welcome-to-rmva-s-documentation">
+<h1>Welcome to RMVA’s documentation!<a class="headerlink" href="#welcome-to-rmva-s-documentation" title="Permalink to this headline">¶</a></h1>
+<p><strong>Risk Management via Volatility Assessment (RMVA)</strong> is a Python library for a
+comprehensive analysis of electricity price volatility in the day-ahead
+market. For this project, model domain is chosen to be the Danish power
+system, with two synchronous bidding zones of west and east Denmark,
+which are part of the NordPool electricity trading arena.</p>
+<p>Electricity generation, consumption and price data are provided by Energinet,
+which is the Danish Transmission System Operator (TSO). All data downloaded
+from the following link &lt;<a class="reference external" href="https://www.energidataservice.dk">https://www.energidataservice.dk</a>&gt;.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This project is under sctive development.</p>
+</div>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+<section id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+<section id="contents">
+<h2>Contents<a class="headerlink" href="#contents" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="data.html">About the data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="data.html#data-source">Data source</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#data-type">Data type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#period-covered">Period covered</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#quick-overview">Quick overview</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="preprocessing.html">Preprocessing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="preprocessing.html#time-issues">Time issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessing.html#lack-of-uniformity">Lack of uniformity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessing.html#issues-with-the-original-files-from-energinet">Issues with the original files from Energinet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessing.html#file-structure-in-the-proprocessing-section">File structure in the proprocessing section</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ts_nature.html">Nature of the time-series</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ts_nature.html#time-series-decomposition">Time-series decomposition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ts_nature.html#auto-correlation-effects">Auto-correlation effects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ts_nature.html#effect-of-generation-and-consumption">Effect of generation and consumption</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="comp_area.html">Comparing price areas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="low_high_freq.html">Dynamics of wholesale electricity prices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="assessing_volatility.html">Assessment of volatility</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="assessing_volatility.html#log-returns-r">Log returns (r)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="assessing_volatility.html#realized-variance-rv">Realized variance (RV)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="assessing_volatility.html#realized-volatility-sigma">Realized volatility (<span class="math notranslate nohighlight">\(\sigma\)</span>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="assessing_volatility.html#realized-semivariance-rs">Realized semivariance (RS)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="har_rv.html">Heterogeneous AutoRegressive Model of Realized Variance (HAR-RV)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="har_rv.html#implementing-har-rv-model">Implementing HAR-RV model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="har_rv.html#results-of-har-rv-model">Results of HAR-RV model</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="#">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Welcome to RMVA’s documentation!</a></li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a><ul>
+<li><a class="reference internal" href="#contents">Contents</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Next topic</h4>
+  <p class="topless"><a href="data.html"
+                        title="next chapter">About the data</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="data.html" title="About the data"
+             >next</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">RMVA 0.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Welcome to RMVA’s documentation!</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2022, Kabitri Chattopadhyay.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.1.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,233 @@
+
+
+<!doctype html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+    <title>Assessment of volatility &#8212; RMVA 0.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/bizstyle.css" />
+    
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Dynamics of wholesale electricity prices" href="low_high_freq.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <!--[if lt IE 9]>
+    <script src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="low_high_freq.html" title="Dynamics of wholesale electricity prices"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">RMVA 0.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Assessment of volatility</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="assessment-of-volatility">
+<h1>Assessment of volatility<a class="headerlink" href="#assessment-of-volatility" title="Permalink to this headline">¶</a></h1>
+<p>Over the last couple of decades, a range of volatility estimation methods
+have been proposed in literature, including realized volatility, bipower
+realized variation, wavelet realized volatility, Fourier realized volatility.
+In this work, the following quantities have been defined and analyzed in
+the context of estimating a detailed scenario of volatility analysis in
+the day-ahead wholesale electricity market:</p>
+<ol class="arabic simple">
+<li><p>log returns (r)</p></li>
+<li><p>realized variance (RV)</p></li>
+<li><p>realized volatility (<span class="math notranslate nohighlight">\(\sigma\)</span>)</p></li>
+<li><p>positive/upside realized semivariance (<span class="math notranslate nohighlight">\(RS^{+}\)</span>)</p></li>
+<li><p>negative/downside realized semivariance (<span class="math notranslate nohighlight">\(RS^{-}\)</span>)</p></li>
+</ol>
+<section id="log-returns-r">
+<h2>Log returns (r)<a class="headerlink" href="#log-returns-r" title="Permalink to this headline">¶</a></h2>
+<p>In this study,  the focus have been exclusively on the logarithmic returns.
+It is defined as the logarithmic price change between two adjacent hours:</p>
+<p><span class="math notranslate nohighlight">\(r_{d,h} = \ln\left(S_{d,h}\right) - \ln\left(S_{d,h-1}\right)\)</span></p>
+<p>where <span class="math notranslate nohighlight">\(S_{d,h}\)</span> denotes electricity spot price on hour h of day d of
+transaction. The simple reason for using log returns instead of directly
+measuring ramps is that the very nature of logarithmic properties offers
+normalization.</p>
+<p><span class="math notranslate nohighlight">\(r_{d,h} = \ln\left(\frac{S_{d,h}}{S_{d,h-1}}\right)\)</span></p>
+<p>It is also worth mentioning here that the price time-series has been
+upscaled to avoid any negative values within logarithmic operation.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="hll"><span class="n">el</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">el</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">el</span><span class="p">[</span><span class="n">col</span><span class="p">]))</span> <span class="o">+</span> <span class="n">const</span>
+</span><span class="n">el</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">el</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">/</span> <span class="n">el</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+<figure class="align-left">
+<a class="reference internal image-reference" href="_images/r_annual_bx.png"><img alt="annual variation" src="_images/r_annual_bx.png" style="width: 636.5px; height: 316.0px;" /></a>
+</figure>
+<p>When r is positive, price jump indicates an increase in price and when
+r is negative, the jump indicates a decrease in price. The inter-annual
+variation of r is calculated over the simulation period. It depicts that
+the variation in r on an average showed a declining trend until 2015,
+and then it again started to grow. It should be noted here that 2015
+was also the year with lowest average price among all the years simulated.</p>
+<figure class="align-right">
+<a class="reference internal image-reference" href="_images/r_months_bx.png"><img alt="seasonal variation" src="_images/r_months_bx.png" style="width: 636.5px; height: 316.0px;" /></a>
+</figure>
+<p>The seasonal variability of r is also calculated for both DK1 and DK2.
+It illustrates that the variability in price jumps is highest between
+June to October. Higher variation in jump suggests higher volatility
+in the time series, which can be of concern to market players if not
+forecasted accurately. A closer inspection suggests an the overall
+variation in r remains in between -0.03 and 0.03, after removing
+the extreme outliers for both DK1 and DK2.</p>
+<figure class="align-left">
+<a class="reference internal image-reference" href="_images/r_weeks_bx.png"><img alt="seasonal variation" src="_images/r_weeks_bx.png" style="width: 636.5px; height: 316.0px;" /></a>
+</figure>
+<p>The weekly variability of r shows a slightly reduced variations during
+the weekends, specially for DK2. Althogh this effect is less pronounced
+compared to other effects, such as inter-annual variability shown above,
+it still shows its effect on the time series.</p>
+<figure class="align-right">
+<a class="reference internal image-reference" href="_images/r_distrib.png"><img alt="histogram of r" src="_images/r_distrib.png" style="width: 523.1999999999999px; height: 214.79999999999998px;" /></a>
+</figure>
+<p>A simple frequency distribution of hourly r values shows an extremely
+high peak around 0, indicating a large share of instances, when the
+price change from one hour to the next have been relatively small, in
+both directions. However, the long tails of the distributions also
+suggest a few instances where the prices shown a large spike, either
+due to technical issues or due to the effect of integrating a large
+shares of fluctuating renewables in the generation mix. The apparent
+symmetry of the two tails once again reinstate the mean reversion
+property of the electricity price time-series.</p>
+</section>
+<section id="realized-variance-rv">
+<h2>Realized variance (RV)<a class="headerlink" href="#realized-variance-rv" title="Permalink to this headline">¶</a></h2>
+<p>In the context of this work, another important term is the realized
+variance (RV), which is the assessment of variation in daily returns
+obtained by analyzing its historical returns within a defined time
+period. The realized variance for each day is calculated as the sum
+of squared intra-day logarithmic returns, i.e.,:</p>
+<p><span class="math notranslate nohighlight">\(RV_d = \sum_{h=0}^{23}r_{d,h}^2\)</span></p>
+<figure class="align-center">
+<a class="reference internal image-reference" href="_images/RV_distrib.png"><img alt="histogram of RV" src="_images/RV_distrib.png" style="width: 480.0px; height: 363.20000000000005px;" /></a>
+</figure>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="hll"><span class="n">el</span><span class="p">[</span><span class="s1">&#39;r2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">el</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</span><span class="n">RV</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+<span class="hll"><span class="n">RV</span><span class="p">[</span><span class="s1">&#39;RV_vals&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">el</span><span class="p">[</span><span class="s1">&#39;r2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s1">&#39;D&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</span></pre></div>
+</div>
+<p>The figures below show the inter-annual and seasonal variation of daily
+realized variance. A frequency distribution of the same is also presented
+above. It shows that both DK1 and DK2 have similar distributions, except
+the curve of DK2 is slightly flatter in the log-distribution.</p>
+<figure class="align-left">
+<a class="reference internal image-reference" href="_images/RV_vals.png"><img alt="annual variation" src="_images/RV_vals.png" style="width: 1007.0px; height: 569.0px;" /></a>
+</figure>
+</section>
+<section id="realized-volatility-sigma">
+<h2>Realized volatility (<span class="math notranslate nohighlight">\(\sigma\)</span>)<a class="headerlink" href="#realized-volatility-sigma" title="Permalink to this headline">¶</a></h2>
+<p>Volatility has a specific technical meaning in finance theory. It is the
+degree of variation of a trading price series over time, measured by the
+standard deviation of the daily returns. It is to be noted that volatility
+does not measure the direction of price changes, merely their dispersion.</p>
+<p><span class="math notranslate nohighlight">\(\sigma = \sqrt{\sum_{h=0}^{23}r_{d,h}^2}\)</span></p>
+<p>The figures below depict the seasonal variation of volatility in terms of
+kernel density estimation.</p>
+<figure class="align-center">
+<a class="reference internal image-reference" href="_images/sigma_vals.png"><img alt="monthly volatility" src="_images/sigma_vals.png" style="width: 816.3000000000001px; height: 683.1px;" /></a>
+</figure>
+</section>
+<section id="realized-semivariance-rs">
+<h2>Realized semivariance (RS)<a class="headerlink" href="#realized-semivariance-rs" title="Permalink to this headline">¶</a></h2>
+<p>Although RV and <span class="math notranslate nohighlight">\(\sigma\)</span> are good estimators of volatility, they both
+fail to take into account the directionality of price changes. Thus, we use
+semivariances to estimate this form of volatility which distinguishes between
+upside and downside variations.</p>
+<p><span class="math notranslate nohighlight">\(RS^+_d = \sum_{h=0}^{23} r_{d,h}^2.I\left(r_{d,h} &gt; 0 \right)\)</span></p>
+<p><span class="math notranslate nohighlight">\(RS^-_d = \sum_{h=0}^{23} r_{d,h}^2.I\left(r_{d,h} &lt; 0 \right)\)</span></p>
+<p>Here <span class="math notranslate nohighlight">\(I\)</span> is an indicator function taking the value 1 if the argument is
+true.  A frequency distribution of upside and downside semivariances illustrates
+that higher share of instances with downside (i.e.,  price decreasing) jumps
+tend to populate the lower end of the spectrum leaving a more peaky and skewed
+distribution.</p>
+<figure class="align-center">
+<a class="reference internal image-reference" href="_images/RS_distrib.png"><img alt="RS distribution" src="_images/RS_distrib.png" style="width: 898.2px; height: 271.8px;" /></a>
+</figure>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Assessment of volatility</a><ul>
+<li><a class="reference internal" href="#log-returns-r">Log returns (r)</a></li>
+<li><a class="reference internal" href="#realized-variance-rv">Realized variance (RV)</a></li>
+<li><a class="reference internal" href="#realized-volatility-sigma">Realized volatility (<span class="math notranslate nohighlight">\(\sigma\)</span>)</a></li>
+<li><a class="reference internal" href="#realized-semivariance-rs">Realized semivariance (RS)</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="low_high_freq.html"
+                        title="previous chapter">Dynamics of wholesale electricity prices</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/assessing_volatility.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="low_high_freq.html" title="Dynamics of wholesale electricity prices"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">RMVA 0.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Assessment of volatility</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2022, Kabitri Chattopadhyay.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.1.
+    </div>
+  </body>
+</html>
